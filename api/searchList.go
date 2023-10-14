@@ -1,21 +1,22 @@
 package main
 
 import (
-        "flag"
-        "fmt"
-        "log"
-        "net/http"
+	"flag"
+	"fmt"
+	"log"
+	"net/http"
+	
 
-        "google.golang.org/api/googleapi/transport"
-        "google.golang.org/api/youtube/v3"
+	"google.golang.org/api/googleapi/transport"
+	"google.golang.org/api/youtube/v3"
 )
 
 var (
-        query      = flag.String("query", "Google", "Search term")
+        query      = flag.String("query", "Operating System", "Search term")
         maxResults = flag.Int64("max-results", 25, "Max YouTube results")
 )
 
-const developerKey = "YOUR DEVELOPER KEY"
+const developerKey = "AIzaSyCVyAuztulPhUTKsskORtZI6RmsLl5TWlk"
 
 func main() {
         flag.Parse()
@@ -34,7 +35,9 @@ func main() {
                 Q(*query).
                 MaxResults(*maxResults)
         response, err := call.Do()
-        http.Error(err, "")
+        if err!=nil{
+                fmt.Println("Error encountered")
+        }
 
         // Group video, channel, and playlist results in separate lists.
         videos := make(map[string]string)
