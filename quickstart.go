@@ -1,34 +1,3 @@
-// package main
-
-// import (
-//         // "flag"
-//         "fmt"
-//         // "log"
-//         "net/http"
-// 		// "go.mongodb.org/mongo-driver/bson/primitive"
-// 		"io/ioutil"
-
-//         // "google.golang.org/api/googleapi/transport"
-//         // "google.golang.org/api/youtube/v3"
-// )
-
-// func main() {
-//     url := "https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=AIzaSyCVyAuztulPhUTKsskORtZI6RmsLl5TWlk&part=snippet,contentDetails,statistics,status"
-//     req, err := http.NewRequest("GET", url, nil)
-//     if err != nil {
-//         fmt.Print(err.Error())
-//     }
-//     res, err := http.DefaultClient.Do(req)
-//     if err != nil {
-//         fmt.Print(err.Error())
-//     }
-//     defer res.Body.Close()
-//     body, readErr := ioutil.ReadAll(res.Body)
-//     if readErr != nil {
-//         fmt.Print(err.Error())
-//     }
-//     fmt.Println(string(body))
-// }
 
 //initialize everything and start the gin server
 
@@ -37,14 +6,10 @@ package main
 import (
 	"FamPay/controllers"
 	"FamPay/models"
-
-	// "encoding/json"
-
-	// "FamPay/models"
+	
 	"FamPay/services"
 	"context"
 
-	// "encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -56,7 +21,7 @@ import (
 	"google.golang.org/api/googleapi/transport"
 	"google.golang.org/api/youtube/v3"
 
-	// "go.mongodb.org/mongo-driver/mongo/readpref"
+
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -79,6 +44,8 @@ var (
 )
 
 const developerKey = "AIzaSyCVyAuztulPhUTKsskORtZI6RmsLl5TWlk"
+//  var developerKey=os.Getenv("APIkey")
+//  var MongoURI=os.Getenv("MongoURI")
 
 // we'll initialize them in the init function
 func init() {
@@ -104,7 +71,6 @@ func init() {
 
 	ctx = context.TODO() //will create a single context object with no cancellation thing inside
 
-	// mongoconn := options.Client().ApplyURI("mongodb://localhost:27017")
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	mongoconn := options.Client().ApplyURI("mongodb+srv://2202vartikavsh:vart987654321@cluster0.vu5eoiq.mongodb.net/?retryWrites=true&w=majority").SetServerAPIOptions(serverAPI)
 	// Create a new client and connect to the server
@@ -112,11 +78,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	// defer func() {
-	//   if err = mongoclient.Disconnect(context.TODO()); err != nil {
-	// 	panic(err)
-	//   }
-	// }()
+
 	// Send a ping to confirm a successful connection
 	if err := mongoclient.Database("admin").RunCommand(context.TODO(), bson.D{{Key: "ping", Value: 1}}).Err(); err != nil {
 		panic(err)
@@ -127,7 +89,6 @@ func init() {
 
 	// Initialize a slice to store the video information.
 
-	//  var videos models.Video
 	var list []models.Video
 
 	//   // Unmarshal the JSON data into the Video instance.

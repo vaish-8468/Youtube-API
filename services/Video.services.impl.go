@@ -47,6 +47,11 @@ func (u *VideoServiceImpl) GetList(title *string) (*models.Video,error){
 	return video, err
 }
 
+// func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+//  collection := client.Database("myGoappDB").Collection("Posts")
+//  return collection
+// }
+
 
 func (u *VideoServiceImpl) GetAll() ([]*models.Video,error){
 		//fetch videos one by one from the database
