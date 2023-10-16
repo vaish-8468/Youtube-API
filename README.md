@@ -50,4 +50,11 @@ Clone the repository using :
 git clone https://github.com/vaish-8468/Youtube-API.git
 ```
 
+### Reference:
+ 1. [YouTube data v3 API](https://developers.google.com/youtube/v3/gettingstarted)
+ 2. [Search API reference](https://developers.google.com/youtube/v3/docs/search/list)
+ 3. [Go REST API – Sort, Page, Filter](https://go-cloud-native.com/golang/go-rest-api-sort-page-and-filter)
+ 4. [Create a Text Index](https://www.mongodb.com/docs/manual/core/indexes/index-types/index-text/create-text-index/#std-label-create-text-index)
+
+
 
