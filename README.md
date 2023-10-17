@@ -38,11 +38,11 @@ localhost:9090/Get?page=1
 
 `/Get/title` Returns list of videos with partially or completely match the given title query parameter, paginated with 10 items per page.
 ```
-localhost:9090/search?page=1&title=DBMS
+localhost:9090/search?page=1&query=DBMS
 ```
 
 ### Database
-This server uses MongoDB. To handle search(title) queries, we have 2 text indexes (compound index) on title and description fields.
+This server uses MongoDB. To handle search(query) queries, we have 2 text indexes (compound index) on title and description fields.
 
 ### Usage
 Clone the repository using :
@@ -54,7 +54,7 @@ git clone https://github.com/vaish-8468/Youtube-API.git
  1. [YouTube data v3 API](https://developers.google.com/youtube/v3/gettingstarted)
  2. [Search API reference](https://developers.google.com/youtube/v3/docs/search/list)
  3. [Go REST API – Sort, Page, Filter](https://go-cloud-native.com/golang/go-rest-api-sort-page-and-filter)
- 4. [Create a Text Index](https://www.mongodb.com/docs/manual/core/indexes/index-types/index-text/create-text-index/#std-label-create-text-index)
+ 4. [Create a Text Index](https://www.mongodb.com/docs/drivers/go/current/fundamentals/crud/read-operations/text/#:~:text=To%20perform%20a%20text%20search,field%20in%20your%20query%20filter)
 
 
 
