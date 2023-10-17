@@ -36,9 +36,9 @@ This projected has been implemented using Golang's popular Gin Web Framework and
 localhost:9090/Get?page=1
 ```
 
-`/Get/title` Returns list of videos with partially or completely match the given title query parameter, paginated with 10 items per page.
+`/Get/query` Returns list of videos with partially or completely match the given title query parameter, paginated with 10 items per page.
 ```
-localhost:9090/search?page=1&query=DBMS
+localhost:9090/Get?page=1&query=DBMS
 ```
 
 ### Database
