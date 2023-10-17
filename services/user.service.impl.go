@@ -6,9 +6,15 @@ import (
 	"FamPay/models"
 	"context"
 	"errors"
+	"log"
+	"strconv"
+
+	// "time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	// "go.mongodb.org/mongo-driver/mongo/options"
 )
 
 
@@ -39,15 +45,80 @@ func (u *UserServiceImpl) CreateUser(user *models.User) error{
 }
 
 //receiver function to take username as a parameter and return user object
-func (u *UserServiceImpl) GetUser(name *string) (*models.User,error){
-	//here, we have a dynamic variable i.e. user
-	var user *models.User
-	//mongo query
-	query :=bson.D{bson.E{Key:"name", Value: name}}
+func (u *UserServiceImpl) GetUser(name *string, page *string, pageSize *string) ([]*models.User,error){
+	// //here, we have a dynamic variable i.e. user
+	// var user *models.User
+	// //mongo query
+	// query :=bson.D{bson.E{Key:"name", Value: name}}
 
-	//logic for finding user
-	err:= u.usercollection.FindOne(u.ctx,query).Decode(&user) //we;'' decode the query and assign it to the user variable
-	return user, err
+	// //logic for finding user
+	// err:= u.usercollection.FindOne(u.ctx,query).Decode(&user) //we'll decode the query and assign it to the user variable
+	// return user, err
+
+	// var user *models.User
+	//mongo query
+	// query := bson.D{bson.E{Key:"title", Value: title}}
+
+
+	// check:=u.CreateIndex(name,true)
+	// if check==false{
+	// 	errors.New("Failed to create an index")
+	// }
+	
+	 
+ 
+	 // Convert the page and pageSize to integers
+	 pageInt, _ := strconv.Atoi(*page)
+	 pageSizeInt, _ := strconv.Atoi(*pageSize)
+	 pageSizeInt64:=int64(pageSizeInt)
+ 
+	 // Calculate the skip value for pagination
+	 skip := int64((pageInt - 1) * pageSizeInt)
+
+	 // Define the sort order (descending by published datetime)
+	 sort := bson.D{{Key: "video.Snippet.PublishedAt", Value: -1}}
+
+	 // Perform the MongoDB query with pagination and sorting
+	 cursor, err := u.usercollection.Find(u.ctx, bson.M{}, &options.FindOptions{
+		 Skip:  &skip,
+		 Limit: &pageSizeInt64,
+		 Sort:  sort,
+	 })
+
+	// filter := bson.M{
+    //     "$text": bson.M{"$search": name},
+    // }
+
+    // Find videos matching the search query
+    // cursor, err := u.usercollection.Find(u.ctx, filter)
+    if err != nil {
+        log.Println(err)
+        // Handle the error and return an appropriate response
+    }
+    // defer cursor.Close(context.TODO())
+
+    var users []*models.User
+    for cursor.Next(context.TODO()) {
+        var user models.User
+        err:=cursor.Decode(&user)
+		if err!=nil{
+			return nil, err
+		}
+        users = append(users, &user)
+    }
+	//stop the cursor
+	cursor.Close(u.ctx)
+	
+	if len(users)==0{
+		 return nil, errors.New("no record found")
+	}
+
+	//logic for finding video
+	// err:= u.videocollection.FindOne(u.ctx,query).Decode(&video) //we'll decode the query and assign it to the video variable
+	return users, err
+
+
+
 }
 
 
@@ -112,3 +183,31 @@ func (u *UserServiceImpl) DeleteUser(name *string) error{
 	}
 	return nil
 }
+
+// func (u *UserServiceImpl) CreateIndex(field *string, unique bool) bool {
+
+//     // 1. Lets define the keys for the index we want to create
+   
+// 	mod  := mongo.IndexModel{
+// 		Keys: bson.D{{Key: *field, Value: "text"}},
+// 		Options: options.Index().SetUnique(unique),
+// 	}
+
+//     // 2. Create the context for this operation
+// 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+// 	defer cancel()
+
+//     // 3. Connect to the database and access the collection
+//     collection := u.usercollection;
+
+//     // 4. Create a single index
+// 	_, err := collection.Indexes().CreateOne(ctx, mod)
+// 	if err != nil {
+//         // 5. Something went wrong, we log it and return false
+// 		log.Println(err)
+// 		return false
+//     }
+
+//     // 6. All went well, we return true
+// 	return true
+// }

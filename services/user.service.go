@@ -10,10 +10,11 @@ import "FamPay/models"
 
 type UserService interface{
 	CreateUser(*models.User) error  //will save the error if reflected in mongodb
-	GetUser(*string) (*models.User, error)
+	GetUser(*string,*string,*string) ([]*models.User, error)
 	GetAll() ([]*models.User, error)  //returns all the objects as slice
 	UpdateUser(*models.User) error  //takes user information as a parameter
 	DeleteUser(*string) error //takes username as a parameter
+	// CreateIndex(*string) bool
 
 	
 }

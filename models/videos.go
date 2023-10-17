@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 // import "go.mongodb.org/mongo-driver/bson/primitive"
 
 // // struct to store video metadata
@@ -24,7 +26,7 @@ type Id struct {
 }
 
 type Snippet struct {
-	PublishedAt      string `json:"publishedAt" bson:"publishedAt"`
+	PublishedAt      time.Time `json:"publishedAt" bson:"publishedAt"`
 	SnippetChannelId string `json:"channelId" bson:"channelId"`
 	Title            string `json:"title" bson:"title"`
 	Description      string `json:"description" bson:"description"`
