@@ -6,6 +6,8 @@ import (
 	// "FamPay/configs"
 	"FamPay/controllers"
 	"FamPay/models"
+	"os"
+
 	// "os"
 	"time"
 
@@ -21,6 +23,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/api/googleapi/transport"
+
 	// "google.golang.org/api/option"
 	"google.golang.org/api/youtube/v3"
 
@@ -46,10 +49,10 @@ var (
 )
 
 
-const developerKey = "AIzaSyCVyAuztulPhUTKsskORtZI6RmsLl5TWlk"
 
-// var developerKey=os.Getenv("APIkey")
-//  var MongoURI=os.Getenv("MongoURI")
+
+var developerKey=os.Getenv("APIkey")
+ var MongoURI=os.Getenv("MongoURI")
 //  var username=os.Getenv("USERNAME")
 //  var password=os.Getenv("PASSWORD")
 
@@ -86,9 +89,8 @@ func init() {
 	
 
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	mongoconn := options.Client().ApplyURI("mongodb+srv://2202vartikavsh:vart987654321@cluster0.vu5eoiq.mongodb.net/?retryWrites=true&w=majority").SetServerAPIOptions(serverAPI)
-
-	// mongoconn := options.Client().ApplyURI(configs.EnvMongoURI()).SetServerAPIOptions(serverAPI)
+	
+	mongoconn := options.Client().ApplyURI(MongoURI).SetServerAPIOptions(serverAPI)
 	// Create a new client and connect to the server
 	mongoclient, err := mongo.Connect(context.TODO(), mongoconn)
 	if err != nil {
