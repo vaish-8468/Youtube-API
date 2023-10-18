@@ -24,6 +24,14 @@ in descending order of published datetime.
 1. Golang's Gin-Gonic Web Framework
 2. MongoDB driver
 
+### Functionalisties
+1. The server spawns a go routine which gets videos metadata (with predefined query, "DBMS" in our case) from youtube every 10seconds.
+2. User can supply multiple API keys, first valid API key in the list will be used everytime a request is made.
+3. Search query matches with objects with partially or completely matching title or description. The search is case insensitive.
+4. User can retrieve the latest videos in reverse chronological order of their published time
+5. User can perform CRUD operations in mongodb database as per the requirements.
+
+
 ### Methodology
 This projected has been implemented using Golang's popular Gin Web Framework and used MongoDB driver to perform CRUD operations created using MVC([Model-View-Controller](https://www.geeksforgeeks.org/mvc-framework-introduction/))framework.
 
@@ -31,15 +39,22 @@ This projected has been implemented using Golang's popular Gin Web Framework and
 
 
 ### APIs
+Routes:
+![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/d54b1c08-02c5-4708-a94c-dde83a733c4e)
+
 `/Get` Returns list of videos paginated with 10 items per page.
 ```
-localhost:9090/Get?page=1
+localhost:9090/v2/video/get?page=1
 ```
+![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/d872c0bb-22bb-45f9-91de-2cdf8ae30d9a)
+
 
 `/Get/:query` Returns list of videos with partially or completely match the given title query parameter, paginated with 10 items per page.
 ```
-localhost:9090/Get?page=1&query=DBMS
+localhost:9090/v2/video/get?page=1&query=DBMS
 ```
+![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/a2e14f1d-bce0-41db-a62d-182899d7abff)
+
 
 ### Database
 This server uses MongoDB. To handle search(query) queries, we have 2 text indexes (compound index) on title and description fields.
@@ -49,6 +64,19 @@ Clone the repository using :
 ```
 git clone https://github.com/vaish-8468/Youtube-API.git
 ```
+To start the server:
+1. `make run` will start the server locally on port 8080.
+   or
+`docker build . -t docker-gs-ping && docker run -p 8080:8080 docker-gs-ping` will start a docker container on port 8080.
+
+### Issues
+To fix mongodb error, we can start mongodb server manually:
+```
+sudo systemctl start mongod
+mongosh
+```
+![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/6ce63dcd-1abf-49d5-aa3c-32085cf899ca)
+
 
 ### Reference:
  1. [YouTube data v3 API](https://developers.google.com/youtube/v3/gettingstarted)
