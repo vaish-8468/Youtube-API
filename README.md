@@ -35,25 +35,26 @@ in descending order of published datetime.
 ### Methodology
 This projected has been implemented using Golang's popular Gin Web Framework and used MongoDB driver to perform CRUD operations created using MVC([Model-View-Controller](https://www.geeksforgeeks.org/mvc-framework-introduction/))framework.
 
-![Model1](https://github.com/vaish-8468/Youtube-API/assets/84587662/f7d997ea-6097-4b7f-8660-f4ffe416de63)
+![Model1](https://github.com/vaish-8468/Youtube-API/assets/84587662/3d8a22a3-2fe9-43f1-8ce9-27f6ee95bcef)
+
 
 
 ### APIs
 Routes:
-![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/d54b1c08-02c5-4708-a94c-dde83a733c4e)
+![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/7c06824d-6e02-4216-bb11-3b1267cfbe54)
+
 
 `/Get` Returns list of videos paginated with 10 items per page.
 ```
 localhost:9090/v2/video/get?page=1
 ```
-![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/d872c0bb-22bb-45f9-91de-2cdf8ae30d9a)
-
 
 `/Get/:query` Returns list of videos with partially or completely match the given title query parameter, paginated with 10 items per page.
 ```
 localhost:9090/v2/video/get?page=1&query=DBMS
 ```
-![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/a2e14f1d-bce0-41db-a62d-182899d7abff)
+![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/bb5bbb79-64dc-4023-b685-0c2c45095909)
+
 
 
 ### Database
@@ -65,9 +66,11 @@ Clone the repository using :
 git clone https://github.com/vaish-8468/Youtube-API.git
 ```
 To start the server:
-1. `make run` will start the server locally on port 8080.
+1. `make run` will start the server locally on port 9090
    or
-`docker build . -t docker-gs-ping && docker run -p 8080:8080 docker-gs-ping` will start a docker container on port 8080.
+`docker build . -t docker-gs-ping && docker run -p 9090:9090 docker-gs-ping` will start a docker container on port 9090.
+![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/58094105-ef0e-4e75-bc34-c3cb059e222b)
+
 
 ### Issues
 To fix mongodb error, we can start mongodb server manually:
@@ -75,7 +78,8 @@ To fix mongodb error, we can start mongodb server manually:
 sudo systemctl start mongod
 mongosh
 ```
-![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/6ce63dcd-1abf-49d5-aa3c-32085cf899ca)
+![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/3814e17e-4dbd-4ffc-b0c5-e15af7a73488)
+
 
 
 ### Reference:
