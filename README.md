@@ -24,7 +24,7 @@ in descending order of published datetime.
 1. Golang's Gin-Gonic Web Framework
 2. MongoDB driver
 
-### Functionalisties
+### Functionalities
 1. The server spawns a go routine which gets videos metadata (with predefined query, "DBMS" in our case) from youtube every 10seconds.
 2. User can supply multiple API keys, first valid API key in the list will be used everytime a request is made.
 3. Search query matches with objects with partially or completely matching title or description. The search is case insensitive.
