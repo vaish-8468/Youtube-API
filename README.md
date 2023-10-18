@@ -1,3 +1,38 @@
+# YOUTUBE-GO RestAPI
+### Content
+1. [Project Goal](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#project-goal)
+2. [TechStack Used](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#tech-stack-used)
+3. [Functionalities](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#functionalities)
+4. [Methodology](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#methodology)
+5. [APIs](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#apis)
+6. [Database](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#database)
+7. [Usage](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#usage)
+8. [Issues](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#issues)
+9. [References](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#reference)
+
+
+Project Directory:
+```
+FamPay
+|---models
+|     |---video.go
+|
+|---services
+|     |---video.services.go
+|     |---video.services.impl.go
+|
+|---controllers
+|     |---video.controller.go
+|
+|---go.mod
+|---go.sum
+|---README.md
+|---Dockerfile
+|---quickstart.go(main.go)
+
+```
+
+
 ### Project Goal
 To make an API to fetch latest videos sorted in reverse chronological order of their
 publishing date-time from YouTube for a given tag/search query in a paginated
@@ -58,7 +93,10 @@ localhost:9090/v2/video/get?page=1&query=DBMS
 
 
 ### Database
-This server uses MongoDB. To handle search(query) queries, we have 2 text indexes (compound index) on title and description fields.
+This server uses MongoDB. 
+
+To handle search(query) queries, we have 2 text indexes (compound index) on title and description fields.For more details, [refer to](https://www.mongodb.com/docs/drivers/go/current/fundamentals/connection/).
+
 
 ### Usage
 Clone the repository using :
