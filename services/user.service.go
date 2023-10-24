@@ -1,5 +1,6 @@
 
-// Generally, API contracts describe the supported responses, supported methods, such as POST and PUT, etc., terms of service, and version, along with the outputs and inputs. 
+// Generally, API contracts describe the supported responses, supported methods, such as POST and PUT, etc., 
+//terms of service, and version, along with the outputs and inputs. 
 
 
 //services interact with database

@@ -3,17 +3,23 @@
 package services
 
 import (
+	"FamPay/api"
 	"FamPay/models"
 	"context"
 	"errors"
+	"fmt"
 	"log"
 
+	// "os"
 	"strconv"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
+
+var developerKey = "AIzaSyCVyAuztulPhUTKsskORtZI6RmsLl5TWlk"
 
 type VideoServiceImpl struct {
 	videocollection *mongo.Collection //this will have user collection object which can be accessed using pointer
@@ -47,19 +53,68 @@ func (u *VideoServiceImpl) GetList(title *string, page *string, pageSize *string
 	pageSizeInt, _ := strconv.Atoi(*pageSize)
 	// // // Calculate the skip value for pagination
 	skip := int64((pageInt - 1) * pageSizeInt)
+	maxResults := int64(10)
 
 	filter := bson.D{{Key: "$text", Value: bson.D{{Key: "$search", Value: title}}}}
 	// Define the sort order (descending by published datetime)
-	sort := options.Find().SetSort(bson.D{{Key: "snippet.publishedAt", Value: -1}}).SetLimit(int64(pageInt)).SetSkip(skip);
+	sort := options.Find().SetSort(bson.D{{Key: "snippet.publishedAt", Value: -1}}).SetLimit(int64(pageInt)).SetSkip(skip)
 
 	// Find videos matching the search query
-	cursor, err := u.videocollection.Find(u.ctx, filter,sort)
-	
+	cursor, err := u.videocollection.Find(u.ctx, filter, sort)
 	if err != nil {
-		log.Println(err)
-		// Handle the error and return an appropriate response
+		// Data doesn't exist, call YouTube API to fetch data
+		response, err := api.FetchYouTubeVideos(u.ctx, title, &maxResults, developerKey)
+		if err != nil {
+			log.Println(err)
+		}
+		fmt.Print("Hello")
+		// Iterate through each item in the response and store the relevant data.
+		for _, video := range response.Items {
+			// Create a Video instance for each video in the response
+			publishedAt, err := time.Parse(time.RFC3339, video.Snippet.PublishedAt)
+			if err != nil {
+				log.Println(err)
+			}
+			videos := models.Video{
+				Kind: video.Kind,
+				Etag: video.Etag,
+				Id: models.Id{
+					IDKind:     video.Id.Kind,
+					VideoId:    video.Id.VideoId,
+					ChannelId:  video.Id.ChannelId,
+					PlaylistId: video.Id.PlaylistId,
+				},
+				Snippet: models.Snippet{
+					PublishedAt:      publishedAt,
+					SnippetChannelId: video.Snippet.ChannelId,
+					Title:            video.Snippet.Title,
+					Description:      video.Snippet.Description,
+					// ThumbnailUrl: video.Snippet.Thumbnails["default"], // Access the default thumbnail
+					ChannelTitle: video.Snippet.ChannelTitle,
+					// LiveBroadcastContent: video.Snippet.LiveBroadcastContent,
+				},
+			}
+			// Insert the video document into MongoDB
+			_, err = u.videocollection.InsertOne(u.ctx, videos)
+			if err != nil {
+				log.Println(err)
+			}
+			//creating text indexing
+			model := mongo.IndexModel{Keys: bson.D{{Key: "snippet.title", Value: "text"}, {Key: "snippet.description", Value: "text"}}}
+			_, err = u.videocollection.Indexes().CreateOne(context.TODO(), model)
+			if err != nil {
+				panic(err)
+			}
+		}
+
+		// Find videos matching the search query again after calling youtube api and storing the data
+		cursor, err = u.videocollection.Find(u.ctx, filter, sort)
+		if err != nil {
+			panic(err)
+		}
 	}
 
+	// otherwise data exists in the database, return it as a response
 
 	var videos []*models.Video
 	for cursor.Next(context.TODO()) {
@@ -75,12 +130,11 @@ func (u *VideoServiceImpl) GetList(title *string, page *string, pageSize *string
 	cursor.Close(u.ctx)
 
 	if len(videos) == 0 {
-		return nil, errors.New("no record found")
+		return nil, errors.New("no records found in the database and api")
 	}
 
 	return videos, err
 }
-
 
 func (u *VideoServiceImpl) GetAll() ([]*models.Video, error) {
 	//fetch videos one by one from the database

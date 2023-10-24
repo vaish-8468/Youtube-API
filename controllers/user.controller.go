@@ -4,7 +4,6 @@ import (
 	"FamPay/models"
 	"FamPay/services"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
