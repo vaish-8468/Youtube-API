@@ -7,8 +7,7 @@
 5. [APIs](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#apis)
 6. [Database](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#database)
 7. [Usage](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#usage)
-8. [Issues](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#issues)
-9. [References](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#reference)
+8. [References](https://github.com/vaish-8468/Youtube-API/edit/main/README.md#reference)
 
 
 Project Directory:
@@ -118,16 +117,10 @@ To start the server:
 1. `make run` will start the server locally on port 9090
    or
 `docker build . -t docker-gs-ping && docker run -p 9090:9090 docker-gs-ping` will start a docker container on port 9090.
-![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/58094105-ef0e-4e75-bc34-c3cb059e222b)
+<img width="945" alt="image" src="https://github.com/vaish-8468/Youtube_RestAPI/assets/84587662/706dfc77-ec58-4547-ae45-0dbdfd52fc61">
 
 
-### Issues
-To fix mongodb error, we can start mongodb server manually:
-```
-sudo systemctl start mongod
-mongosh
-```
-![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/3814e17e-4dbd-4ffc-b0c5-e15af7a73488)
+
 
 
 
