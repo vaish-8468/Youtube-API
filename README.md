@@ -1,1 +1,0 @@
-https://cloud.google.com/docs/authentication/provide-credentials-adc#how-to
