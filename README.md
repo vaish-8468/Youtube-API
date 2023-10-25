@@ -89,14 +89,17 @@ Sequence Diagram:
 
 ### APIs
 Routes:
-![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/7c06824d-6e02-4216-bb11-3b1267cfbe54)
+![image](https://github.com/vaish-8468/Youtube_RestAPI/assets/84587662/f20d9d85-3447-4963-ab81-b16550555693)
+
 
 
 `/Get/:query/:page` Returns list of videos with partially or completely match the given title query parameter, paginated with 10 items per page.
 ```
 localhost:9090/v2/video/get/dbms/2
 ```
-![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/bb5bbb79-64dc-4023-b685-0c2c45095909)
+<img width="1440" alt="image" src="https://github.com/vaish-8468/Youtube_RestAPI/assets/84587662/b6e08811-4a9e-4289-a701-d8e6c268ffcb">
+
+
 
 
 
