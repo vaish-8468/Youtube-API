@@ -1,15 +1,11 @@
 package controllers
 
 import (
-	"FamPay/models"
-	"FamPay/services"
-
-	// "context"
-	// "log"
+	"Youtube_RestAPI/models"
+	"Youtube_RestAPI/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	// "go.mongodb.org/mongo-driver/bson"
 )
 
 //interacts with user service
@@ -46,10 +42,10 @@ func (vc *VideoController) CreateList(ctx *gin.Context) {
 // route functions or handlers
 func (vc *VideoController) GetListByQuery(ctx *gin.Context) {
 	query := ctx.Param("query") //fetching the name from ctx object
-	page := ctx.DefaultQuery("page", "1")
+	page := ctx.Param("page")
 	pageSize := ctx.DefaultQuery("pageSize", "10")
-	video, err := vc.VideoServices.GetList(&query,&page, &pageSize)
-	
+	video, err := vc.VideoServices.GetList(&query, &page, &pageSize)
+
 	if err != nil {
 		//error while saving in the mongodb
 		ctx.JSON(http.StatusBadGateway, gin.H{"message": err.Error()}) //returns the message of httpBadRequest output
@@ -94,10 +90,10 @@ func (vc *VideoController) DeleteList(ctx *gin.Context) {
 // route function to group all the routes
 func (vc *VideoController) RegisterVideoRoutes(rg *gin.RouterGroup) {
 	videoRoute := rg.Group("/video") //base path
-	
-	videoRoute.GET("/get/:query", vc.GetListByQuery)
+
+	videoRoute.GET("/get/:query/:page", vc.GetListByQuery)
 	videoRoute.GET("/getAll", vc.GetAll)
 	videoRoute.POST("/create", vc.CreateList)
 	videoRoute.PATCH("/update", vc.UpdateList)
-	videoRoute.DELETE("/delete/:title", vc.DeleteList)
+	videoRoute.DELETE("/delete/:query", vc.DeleteList)
 }
