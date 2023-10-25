@@ -13,9 +13,16 @@
 
 Project Directory:
 ```
-FamPay
+Youtbe_RestAPI
 |---models
 |     |---video.go
+|
+|---configs
+|     |---mongodb.go
+|
+|----api
+|     |---youtube.go
+|
 |
 |---services
 |     |---video.services.go
@@ -28,7 +35,7 @@ FamPay
 |---go.sum
 |---README.md
 |---Dockerfile
-|---quickstart.go(main.go)
+|---main.go
 
 ```
 
@@ -61,16 +68,22 @@ in descending order of published datetime.
 
 ### Functionalities
 1. The server spawns a go routine which gets videos metadata (with predefined query, "DBMS" in our case) from youtube every 10seconds.
-2. User can supply multiple API keys, first valid API key in the list will be used everytime a request is made.
-3. Search query matches with objects with partially or completely matching title or description. The search is case insensitive.
-4. User can retrieve the latest videos in reverse chronological order of their published time
-5. User can perform CRUD operations in mongodb database as per the requirements.
+2. Search query matches with objects with partially or completely matching title or description. The search is case insensitive.
+3. User can retrieve the latest videos in reverse chronological order of their published time
+4. User can perform CRUD operations in mongodb database as per the requirements.
 
 
 ### Methodology
 This projected has been implemented using Golang's popular Gin Web Framework and used MongoDB driver to perform CRUD operations created using MVC([Model-View-Controller](https://www.geeksforgeeks.org/mvc-framework-introduction/))framework.
 
-![Model1](https://github.com/vaish-8468/Youtube-API/assets/84587662/3d8a22a3-2fe9-43f1-8ce9-27f6ee95bcef)
+![image](https://github.com/vaish-8468/Youtube_RestAPI/assets/84587662/86b53b56-9167-485c-8e6b-2524e5435d07)
+
+
+
+Sequence Diagram:
+
+![image](https://github.com/vaish-8468/Youtube_RestAPI/assets/84587662/3d25c59b-c12d-436e-8a07-c91f323671ee)
+
 
 
 
@@ -79,14 +92,9 @@ Routes:
 ![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/7c06824d-6e02-4216-bb11-3b1267cfbe54)
 
 
-`/Get` Returns list of videos paginated with 10 items per page.
+`/Get/:query/:page` Returns list of videos with partially or completely match the given title query parameter, paginated with 10 items per page.
 ```
-localhost:9090/v2/video/get?page=1
-```
-
-`/Get/:query` Returns list of videos with partially or completely match the given title query parameter, paginated with 10 items per page.
-```
-localhost:9090/v2/video/get?page=1&query=DBMS
+localhost:9090/v2/video/get/dbms/2
 ```
 ![image](https://github.com/vaish-8468/Youtube-API/assets/84587662/bb5bbb79-64dc-4023-b685-0c2c45095909)
 
@@ -101,7 +109,7 @@ To handle search(query) queries, we have 2 text indexes (compound index) on titl
 ### Usage
 Clone the repository using :
 ```
-git clone https://github.com/vaish-8468/Youtube-API.git
+git clone https://github.com/vaish-8468/Youtube_RestAPI.git
 ```
 To start the server:
 1. `make run` will start the server locally on port 9090
