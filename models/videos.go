@@ -30,11 +30,6 @@ type Snippet struct {
 	SnippetChannelId string `json:"channelId" bson:"channelId"`
 	Title            string `json:"title" bson:"title"`
 	Description      string `json:"description" bson:"description"`
-	ThumbnailUrl     map[string]struct {
-		URL    string `json:"url"`
-		Width  uint   `json:"width"`
-		Height uint   `json:"height"`
-	} `json:"thumbnails" bson:"thumbnails"`
 	ChannelTitle         string   `json:"channelTitle" bson:"channelTitle"`
-	LiveBroadCastContent []string `json:"liveBroadcastContent" bson:"liveBroadcastContent"`
+
 }
