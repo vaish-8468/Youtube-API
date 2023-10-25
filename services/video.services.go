@@ -3,7 +3,7 @@
 
 package services
 
-import "FamPay/models"
+import "Youtube_RestAPI/models"
 
 
 type VideoService interface{

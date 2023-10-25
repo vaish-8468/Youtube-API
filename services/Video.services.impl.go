@@ -3,8 +3,8 @@
 package services
 
 import (
-	"FamPay/api"
-	"FamPay/models"
+	"Youtube_RestAPI/api"
+	"Youtube_RestAPI/models"
 	"context"
 	"errors"
 	"log"

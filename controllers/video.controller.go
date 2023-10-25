@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"FamPay/models"
-	"FamPay/services"
+	"Youtube_RestAPI/models"
+	"Youtube_RestAPI/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
