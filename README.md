@@ -80,7 +80,7 @@ This projected has been implemented using Golang's popular Gin Web Framework and
 
 
 
-Sequence Diagram:
+User Flow Diagram:
 
 ![image](https://github.com/vaish-8468/Youtube_RestAPI/assets/84587662/3d25c59b-c12d-436e-8a07-c91f323671ee)
 
